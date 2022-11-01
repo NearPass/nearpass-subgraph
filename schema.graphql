@@ -1,5 +1,26 @@
-type ExampleEntity @entity {
-  id: ID!
-  block: Bytes!
-  count: BigInt!
+type Event @entity {
+    id: ID!
+    title: String!
+    "whether the event is active or cancelled"
+    active: Boolean!
+    price: Int!
+    "if the event has unlimited tickets then -1"
+    ticketsRemaining: Int
+    timestamp: BigInt!;
+    tickets: Ticket @derivedFrom(field: "event")
+    host: Host!
+}
+
+type Host @entity {
+    id: ID!
+    name: String!
+    address: Account!
+    events: [Event] @derivedFrom(field: "host")
+}
+
+type Ticket @entity {
+    id: ID!
+    event: Event!
+    used: Boolean!
+    redeemable: Boolean!
 }
