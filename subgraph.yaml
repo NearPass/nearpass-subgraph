@@ -1,17 +1,22 @@
 specVersion: 0.0.4
 schema:
-  file: ./schema.graphql
+    file: ./schema.graphql
+    features:
+        - ipfsOnEthereumContracts
 dataSources:
-  - kind: near
-    name: Event
-    network: near-testnet
-    source:
-      account: "dev-1667138638377-68355460764535"
-    mapping:
-      apiVersion: 0.0.6
-      language: wasm/assemblyscript
-      entities:
-        - ExampleEntity
-      receiptHandlers:
-        - handler: handleReceipt
-      file: ./src/event.ts
+    - kind: near
+      name: Event
+      network: near-testnet
+      source:
+          account: "dev-1667138638377-68355460764535"
+          startBlock: 103859819
+      mapping:
+          apiVersion: 0.0.6
+          language: wasm/assemblyscript
+          entities:
+              - Event
+              - Ticket
+              - Host
+          receiptHandlers:
+              - handler: handleReceipt
+          file: ./src/event.ts
