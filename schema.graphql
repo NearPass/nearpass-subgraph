@@ -3,10 +3,10 @@ type Event @entity {
     title: String!
     "whether the event is active or cancelled"
     active: Boolean!
-    price: Int!
+    price: String!
     "if the event has unlimited tickets then -1"
     ticketsRemaining: Int
-    timestamp: BigInt!;
+    timestamp: BigInt!
     tickets: Ticket @derivedFrom(field: "event")
     host: Host!
 }
@@ -14,8 +14,8 @@ type Event @entity {
 type Host @entity {
     id: ID!
     name: String!
-    address: Account!
-    events: [Event] @derivedFrom(field: "host")
+    address: String!
+    events: [Event!] @derivedFrom(field: "host")
 }
 
 type Ticket @entity {
