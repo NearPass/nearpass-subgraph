@@ -1,6 +1,8 @@
 type Event @entity {
     id: ID!
     title: String!
+    description: String
+    thumbnail: String
     "whether the event is active or cancelled"
     active: Boolean!
     price: String!
