@@ -5,8 +5,9 @@ import {
     ipfs,
     log,
     TypedMap,
+    Bytes,
 } from "@graphprotocol/graph-ts";
-import { Event, Host } from "../generated/schema";
+import { Event, FAQ, Host } from "../generated/schema";
 
 export function handleReceipt(receipt: near.ReceiptWithOutcome): void {
     const actions = receipt.receipt.actions;
@@ -42,22 +43,81 @@ function handleAction(
                 let active = jsonObject.get("active");
                 let price = jsonObject.get("price");
                 let timestamp = jsonObject.get("timestamp");
+                let eventMetadata = (jsonObject.get(
+                    "eventMetadata"
+                ) as JSONValue).toObject();
+
                 event.title = (title as JSONValue).toString();
                 event.active = (active as JSONValue).toBool();
                 event.price = (price as JSONValue).toString();
                 event.timestamp = (timestamp as JSONValue).toBigInt();
 
                 let hostFromJson = jsonObject.get("host");
-                if (hostFromJson) {
-                    let hostObject = hostFromJson.toObject();
-                    let name = hostObject.get("name") as JSONValue;
-                    let address = hostObject.get("accountId") as JSONValue;
-                    let host = new Host(name.toString());
-                    host.name = name.toString();
-                    host.address = address.toString();
-                    event.host = host.id;
-                    host.save();
+                let hostObject = (hostFromJson as JSONValue).toObject();
+
+                let name = hostObject.get("name") as JSONValue;
+                let address = hostObject.get("accountId") as JSONValue;
+                let host = new Host(name.toString());
+                let faq = new FAQ(id.toString());
+
+                host.name = name.toString();
+                host.address = address.toString();
+                event.host = host.id;
+
+                if (eventMetadata) {
+                    let hostEmail = (eventMetadata.get(
+                        "hostemail"
+                    ) as JSONValue).toString();
+                    let telegram = (eventMetadata.get(
+                        "telegram"
+                    ) as JSONValue).toString();
+                    let discord = (eventMetadata.get(
+                        "discord"
+                    ) as JSONValue).toString();
+                    let venue = (eventMetadata.get(
+                        "venue"
+                    ) as JSONValue).toString();
+                    let eventType = (eventMetadata.get(
+                        "eventType"
+                    ) as JSONValue).toString();
+
+                    event.description = (eventMetadata.get(
+                        "description"
+                    ) as JSONValue).toString();
+                    event.thumbnail = (eventMetadata.get(
+                        "thumbnail"
+                    ) as JSONValue).toString();
+
+                    event.eventType = eventType;
+                    event.venue = venue;
+                    event.telegram = telegram;
+                    event.discord = discord;
+
+                    event.question1 = (eventMetadata.get(
+                        "question1"
+                    ) as JSONValue).toString();
+                    event.question2 = (eventMetadata.get(
+                        "question2"
+                    ) as JSONValue).toString();
+
+                    faq.question1 = (eventMetadata.get(
+                        "faqquestion1"
+                    ) as JSONValue).toString();
+                    faq.question2 = (eventMetadata.get(
+                        "faqquestion2"
+                    ) as JSONValue).toString();
+                    faq.answer1 = (eventMetadata.get(
+                        "answer1"
+                    ) as JSONValue).toString();
+                    faq.answer2 = (eventMetadata.get(
+                        "answer2"
+                    ) as JSONValue).toString();
+
+                    event.faq = faq.id;
+                    host.email = hostEmail;
                 }
+                faq.save();
+                host.save();
                 event.save();
             }
         }
