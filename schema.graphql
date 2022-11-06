@@ -7,8 +7,23 @@ type Event @entity {
     "if the event has unlimited tickets then -1"
     ticketsRemaining: Int
     timestamp: BigInt!
+    eventType: String
+    venue: String
     tickets: Ticket @derivedFrom(field: "event")
     host: Host!
+    telegram: String
+    discord: String
+    question1: String
+    question2: String
+    faq: FAQ
+}
+
+type FAQ @entity {
+    id: ID!
+    question1: String
+    answer1: String
+    question2: String
+    answer2: String
 }
 
 type Host @entity {
