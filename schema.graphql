@@ -32,6 +32,7 @@ type Host @entity {
     id: ID!
     name: String!
     address: String!
+    email: String
     events: [Event!] @derivedFrom(field: "host")
 }
 
