@@ -41,4 +41,6 @@ type Ticket @entity {
     event: Event!
     used: Boolean!
     redeemable: Boolean!
+    answer1: String
+    answer2: String
 }
