@@ -11,7 +11,7 @@ import {
   BigDecimal
 } from "@graphprotocol/graph-ts";
 
-export class ExampleEntity extends Entity {
+export class Event extends Entity {
   constructor(id: string) {
     super();
     this.set("id", Value.fromString(id));
@@ -19,18 +19,18 @@ export class ExampleEntity extends Entity {
 
   save(): void {
     let id = this.get("id");
-    assert(id != null, "Cannot save ExampleEntity entity without an ID");
+    assert(id != null, "Cannot save Event entity without an ID");
     if (id) {
       assert(
         id.kind == ValueKind.STRING,
-        `Entities of type ExampleEntity must have an ID of type String but the id '${id.displayData()}' is of type ${id.displayKind()}`
+        `Entities of type Event must have an ID of type String but the id '${id.displayData()}' is of type ${id.displayKind()}`
       );
-      store.set("ExampleEntity", id.toString(), this);
+      store.set("Event", id.toString(), this);
     }
   }
 
-  static load(id: string): ExampleEntity | null {
-    return changetype<ExampleEntity | null>(store.get("ExampleEntity", id));
+  static load(id: string): Event | null {
+    return changetype<Event | null>(store.get("Event", id));
   }
 
   get id(): string {
@@ -42,21 +42,504 @@ export class ExampleEntity extends Entity {
     this.set("id", Value.fromString(value));
   }
 
-  get block(): Bytes {
-    let value = this.get("block");
-    return value!.toBytes();
+  get title(): string {
+    let value = this.get("title");
+    return value!.toString();
   }
 
-  set block(value: Bytes) {
-    this.set("block", Value.fromBytes(value));
+  set title(value: string) {
+    this.set("title", Value.fromString(value));
   }
 
-  get count(): BigInt {
-    let value = this.get("count");
+  get description(): string | null {
+    let value = this.get("description");
+    if (!value || value.kind == ValueKind.NULL) {
+      return null;
+    } else {
+      return value.toString();
+    }
+  }
+
+  set description(value: string | null) {
+    if (!value) {
+      this.unset("description");
+    } else {
+      this.set("description", Value.fromString(<string>value));
+    }
+  }
+
+  get thumbnail(): string | null {
+    let value = this.get("thumbnail");
+    if (!value || value.kind == ValueKind.NULL) {
+      return null;
+    } else {
+      return value.toString();
+    }
+  }
+
+  set thumbnail(value: string | null) {
+    if (!value) {
+      this.unset("thumbnail");
+    } else {
+      this.set("thumbnail", Value.fromString(<string>value));
+    }
+  }
+
+  get active(): boolean {
+    let value = this.get("active");
+    return value!.toBoolean();
+  }
+
+  set active(value: boolean) {
+    this.set("active", Value.fromBoolean(value));
+  }
+
+  get price(): string {
+    let value = this.get("price");
+    return value!.toString();
+  }
+
+  set price(value: string) {
+    this.set("price", Value.fromString(value));
+  }
+
+  get ticketsRemaining(): i32 {
+    let value = this.get("ticketsRemaining");
+    return value!.toI32();
+  }
+
+  set ticketsRemaining(value: i32) {
+    this.set("ticketsRemaining", Value.fromI32(value));
+  }
+
+  get timestamp(): BigInt {
+    let value = this.get("timestamp");
     return value!.toBigInt();
   }
 
-  set count(value: BigInt) {
-    this.set("count", Value.fromBigInt(value));
+  set timestamp(value: BigInt) {
+    this.set("timestamp", Value.fromBigInt(value));
+  }
+
+  get eventType(): string | null {
+    let value = this.get("eventType");
+    if (!value || value.kind == ValueKind.NULL) {
+      return null;
+    } else {
+      return value.toString();
+    }
+  }
+
+  set eventType(value: string | null) {
+    if (!value) {
+      this.unset("eventType");
+    } else {
+      this.set("eventType", Value.fromString(<string>value));
+    }
+  }
+
+  get venue(): string | null {
+    let value = this.get("venue");
+    if (!value || value.kind == ValueKind.NULL) {
+      return null;
+    } else {
+      return value.toString();
+    }
+  }
+
+  set venue(value: string | null) {
+    if (!value) {
+      this.unset("venue");
+    } else {
+      this.set("venue", Value.fromString(<string>value));
+    }
+  }
+
+  get tickets(): string | null {
+    let value = this.get("tickets");
+    if (!value || value.kind == ValueKind.NULL) {
+      return null;
+    } else {
+      return value.toString();
+    }
+  }
+
+  set tickets(value: string | null) {
+    if (!value) {
+      this.unset("tickets");
+    } else {
+      this.set("tickets", Value.fromString(<string>value));
+    }
+  }
+
+  get host(): string {
+    let value = this.get("host");
+    return value!.toString();
+  }
+
+  set host(value: string) {
+    this.set("host", Value.fromString(value));
+  }
+
+  get telegram(): string | null {
+    let value = this.get("telegram");
+    if (!value || value.kind == ValueKind.NULL) {
+      return null;
+    } else {
+      return value.toString();
+    }
+  }
+
+  set telegram(value: string | null) {
+    if (!value) {
+      this.unset("telegram");
+    } else {
+      this.set("telegram", Value.fromString(<string>value));
+    }
+  }
+
+  get discord(): string | null {
+    let value = this.get("discord");
+    if (!value || value.kind == ValueKind.NULL) {
+      return null;
+    } else {
+      return value.toString();
+    }
+  }
+
+  set discord(value: string | null) {
+    if (!value) {
+      this.unset("discord");
+    } else {
+      this.set("discord", Value.fromString(<string>value));
+    }
+  }
+
+  get question1(): string | null {
+    let value = this.get("question1");
+    if (!value || value.kind == ValueKind.NULL) {
+      return null;
+    } else {
+      return value.toString();
+    }
+  }
+
+  set question1(value: string | null) {
+    if (!value) {
+      this.unset("question1");
+    } else {
+      this.set("question1", Value.fromString(<string>value));
+    }
+  }
+
+  get question2(): string | null {
+    let value = this.get("question2");
+    if (!value || value.kind == ValueKind.NULL) {
+      return null;
+    } else {
+      return value.toString();
+    }
+  }
+
+  set question2(value: string | null) {
+    if (!value) {
+      this.unset("question2");
+    } else {
+      this.set("question2", Value.fromString(<string>value));
+    }
+  }
+
+  get faq(): string | null {
+    let value = this.get("faq");
+    if (!value || value.kind == ValueKind.NULL) {
+      return null;
+    } else {
+      return value.toString();
+    }
+  }
+
+  set faq(value: string | null) {
+    if (!value) {
+      this.unset("faq");
+    } else {
+      this.set("faq", Value.fromString(<string>value));
+    }
+  }
+}
+
+export class FAQ extends Entity {
+  constructor(id: string) {
+    super();
+    this.set("id", Value.fromString(id));
+  }
+
+  save(): void {
+    let id = this.get("id");
+    assert(id != null, "Cannot save FAQ entity without an ID");
+    if (id) {
+      assert(
+        id.kind == ValueKind.STRING,
+        `Entities of type FAQ must have an ID of type String but the id '${id.displayData()}' is of type ${id.displayKind()}`
+      );
+      store.set("FAQ", id.toString(), this);
+    }
+  }
+
+  static load(id: string): FAQ | null {
+    return changetype<FAQ | null>(store.get("FAQ", id));
+  }
+
+  get id(): string {
+    let value = this.get("id");
+    return value!.toString();
+  }
+
+  set id(value: string) {
+    this.set("id", Value.fromString(value));
+  }
+
+  get question1(): string | null {
+    let value = this.get("question1");
+    if (!value || value.kind == ValueKind.NULL) {
+      return null;
+    } else {
+      return value.toString();
+    }
+  }
+
+  set question1(value: string | null) {
+    if (!value) {
+      this.unset("question1");
+    } else {
+      this.set("question1", Value.fromString(<string>value));
+    }
+  }
+
+  get answer1(): string | null {
+    let value = this.get("answer1");
+    if (!value || value.kind == ValueKind.NULL) {
+      return null;
+    } else {
+      return value.toString();
+    }
+  }
+
+  set answer1(value: string | null) {
+    if (!value) {
+      this.unset("answer1");
+    } else {
+      this.set("answer1", Value.fromString(<string>value));
+    }
+  }
+
+  get question2(): string | null {
+    let value = this.get("question2");
+    if (!value || value.kind == ValueKind.NULL) {
+      return null;
+    } else {
+      return value.toString();
+    }
+  }
+
+  set question2(value: string | null) {
+    if (!value) {
+      this.unset("question2");
+    } else {
+      this.set("question2", Value.fromString(<string>value));
+    }
+  }
+
+  get answer2(): string | null {
+    let value = this.get("answer2");
+    if (!value || value.kind == ValueKind.NULL) {
+      return null;
+    } else {
+      return value.toString();
+    }
+  }
+
+  set answer2(value: string | null) {
+    if (!value) {
+      this.unset("answer2");
+    } else {
+      this.set("answer2", Value.fromString(<string>value));
+    }
+  }
+}
+
+export class Host extends Entity {
+  constructor(id: string) {
+    super();
+    this.set("id", Value.fromString(id));
+  }
+
+  save(): void {
+    let id = this.get("id");
+    assert(id != null, "Cannot save Host entity without an ID");
+    if (id) {
+      assert(
+        id.kind == ValueKind.STRING,
+        `Entities of type Host must have an ID of type String but the id '${id.displayData()}' is of type ${id.displayKind()}`
+      );
+      store.set("Host", id.toString(), this);
+    }
+  }
+
+  static load(id: string): Host | null {
+    return changetype<Host | null>(store.get("Host", id));
+  }
+
+  get id(): string {
+    let value = this.get("id");
+    return value!.toString();
+  }
+
+  set id(value: string) {
+    this.set("id", Value.fromString(value));
+  }
+
+  get name(): string {
+    let value = this.get("name");
+    return value!.toString();
+  }
+
+  set name(value: string) {
+    this.set("name", Value.fromString(value));
+  }
+
+  get address(): string {
+    let value = this.get("address");
+    return value!.toString();
+  }
+
+  set address(value: string) {
+    this.set("address", Value.fromString(value));
+  }
+
+  get email(): string | null {
+    let value = this.get("email");
+    if (!value || value.kind == ValueKind.NULL) {
+      return null;
+    } else {
+      return value.toString();
+    }
+  }
+
+  set email(value: string | null) {
+    if (!value) {
+      this.unset("email");
+    } else {
+      this.set("email", Value.fromString(<string>value));
+    }
+  }
+
+  get events(): Array<string> | null {
+    let value = this.get("events");
+    if (!value || value.kind == ValueKind.NULL) {
+      return null;
+    } else {
+      return value.toStringArray();
+    }
+  }
+
+  set events(value: Array<string> | null) {
+    if (!value) {
+      this.unset("events");
+    } else {
+      this.set("events", Value.fromStringArray(<Array<string>>value));
+    }
+  }
+}
+
+export class Ticket extends Entity {
+  constructor(id: string) {
+    super();
+    this.set("id", Value.fromString(id));
+  }
+
+  save(): void {
+    let id = this.get("id");
+    assert(id != null, "Cannot save Ticket entity without an ID");
+    if (id) {
+      assert(
+        id.kind == ValueKind.STRING,
+        `Entities of type Ticket must have an ID of type String but the id '${id.displayData()}' is of type ${id.displayKind()}`
+      );
+      store.set("Ticket", id.toString(), this);
+    }
+  }
+
+  static load(id: string): Ticket | null {
+    return changetype<Ticket | null>(store.get("Ticket", id));
+  }
+
+  get id(): string {
+    let value = this.get("id");
+    return value!.toString();
+  }
+
+  set id(value: string) {
+    this.set("id", Value.fromString(value));
+  }
+
+  get event(): string {
+    let value = this.get("event");
+    return value!.toString();
+  }
+
+  set event(value: string) {
+    this.set("event", Value.fromString(value));
+  }
+
+  get used(): boolean {
+    let value = this.get("used");
+    return value!.toBoolean();
+  }
+
+  set used(value: boolean) {
+    this.set("used", Value.fromBoolean(value));
+  }
+
+  get redeemable(): boolean {
+    let value = this.get("redeemable");
+    return value!.toBoolean();
+  }
+
+  set redeemable(value: boolean) {
+    this.set("redeemable", Value.fromBoolean(value));
+  }
+
+  get answer1(): string | null {
+    let value = this.get("answer1");
+    if (!value || value.kind == ValueKind.NULL) {
+      return null;
+    } else {
+      return value.toString();
+    }
+  }
+
+  set answer1(value: string | null) {
+    if (!value) {
+      this.unset("answer1");
+    } else {
+      this.set("answer1", Value.fromString(<string>value));
+    }
+  }
+
+  get answer2(): string | null {
+    let value = this.get("answer2");
+    if (!value || value.kind == ValueKind.NULL) {
+      return null;
+    } else {
+      return value.toString();
+    }
+  }
+
+  set answer2(value: string | null) {
+    if (!value) {
+      this.unset("answer2");
+    } else {
+      this.set("answer2", Value.fromString(<string>value));
+    }
   }
 }
