@@ -265,6 +265,15 @@ export class Event extends Entity {
       this.set("faq", Value.fromString(<string>value));
     }
   }
+
+  get attendees(): BigInt {
+    let value = this.get("attendees");
+    return value!.toBigInt();
+  }
+
+  set attendees(value: BigInt) {
+    this.set("attendees", Value.fromBigInt(value));
+  }
 }
 
 export class FAQ extends Entity {
@@ -541,5 +550,57 @@ export class Ticket extends Entity {
     } else {
       this.set("answer2", Value.fromString(<string>value));
     }
+  }
+
+  get name(): string {
+    let value = this.get("name");
+    return value!.toString();
+  }
+
+  set name(value: string) {
+    this.set("name", Value.fromString(value));
+  }
+
+  get email(): string | null {
+    let value = this.get("email");
+    if (!value || value.kind == ValueKind.NULL) {
+      return null;
+    } else {
+      return value.toString();
+    }
+  }
+
+  set email(value: string | null) {
+    if (!value) {
+      this.unset("email");
+    } else {
+      this.set("email", Value.fromString(<string>value));
+    }
+  }
+
+  get phone(): string | null {
+    let value = this.get("phone");
+    if (!value || value.kind == ValueKind.NULL) {
+      return null;
+    } else {
+      return value.toString();
+    }
+  }
+
+  set phone(value: string | null) {
+    if (!value) {
+      this.unset("phone");
+    } else {
+      this.set("phone", Value.fromString(<string>value));
+    }
+  }
+
+  get accountId(): string {
+    let value = this.get("accountId");
+    return value!.toString();
+  }
+
+  set accountId(value: string) {
+    this.set("accountId", Value.fromString(value));
   }
 }

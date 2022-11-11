@@ -18,6 +18,7 @@ type Event @entity {
     question1: String
     question2: String
     faq: FAQ
+    attendees: BigInt!
 }
 
 type FAQ @entity {
@@ -43,4 +44,8 @@ type Ticket @entity {
     redeemable: Boolean!
     answer1: String
     answer2: String
+    name: String!
+    email: String
+    phone: String
+    accountId: String!
 }
