@@ -38,6 +38,10 @@ function handleAction(
     if (methodName == "buyTicketCallback") {
         handleBuyTicket(outcome);
     }
+
+    if (methodName == "redeem") {
+        handleRedeem(outcome);
+    }
 }
 
 function handleCreateEvent(outcome: near.ExecutionOutcome): void {
@@ -194,14 +198,39 @@ function handleBuyTicket(outcome: near.ExecutionOutcome): void {
 
             ticket.answer1 = answer1;
             ticket.answer2 = answer2;
-            ticket.event = eventId;
             ticket.used = used;
             ticket.redeemable = redeemable;
             ticket.name = name;
             ticket.email = email;
             ticket.phone = phone;
             ticket.accountId = accountId;
+
+            ticket.event = eventId;
+            let event = Event.load(eventId);
+            if (event) {
+                event.attendees = BigInt.fromI32(event.attendees.toI32() + 1);
+                event.save();
+            }
+
             ticket.save();
+        }
+    }
+}
+
+function handleRedeem(outcome: near.ExecutionOutcome): void {
+    for (let i = 0; i < outcome.logs.length; i++) {
+        const outcomeLog = outcome.logs[i].toString();
+        const jsonData = json.try_fromString(outcomeLog);
+        const jsonObject = jsonData.value.toObject();
+
+        const ticketId = jsonObject.get("ticketId");
+        if (ticketId) {
+            let ticket = Ticket.load(ticketId.toString());
+            if (ticket) {
+                ticket.used = true;
+                ticket.redeemable = false;
+                ticket.save();
+            }
         }
     }
 }
