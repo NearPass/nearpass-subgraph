@@ -155,20 +155,20 @@ export class Event extends Entity {
     }
   }
 
-  get tickets(): string | null {
+  get tickets(): Array<string> | null {
     let value = this.get("tickets");
     if (!value || value.kind == ValueKind.NULL) {
       return null;
     } else {
-      return value.toString();
+      return value.toStringArray();
     }
   }
 
-  set tickets(value: string | null) {
+  set tickets(value: Array<string> | null) {
     if (!value) {
       this.unset("tickets");
     } else {
-      this.set("tickets", Value.fromString(<string>value));
+      this.set("tickets", Value.fromStringArray(<Array<string>>value));
     }
   }
 

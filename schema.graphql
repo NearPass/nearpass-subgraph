@@ -11,7 +11,7 @@ type Event @entity {
     timestamp: BigInt!
     eventType: String
     venue: String
-    tickets: Ticket @derivedFrom(field: "event")
+    tickets: [Ticket!] @derivedFrom(field: "event")
     host: Host!
     telegram: String
     discord: String
