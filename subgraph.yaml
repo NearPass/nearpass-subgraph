@@ -8,7 +8,7 @@ dataSources:
       name: Event
       network: near-testnet
       source:
-          account: "dev-1668157708044-69561609686629"
+          account: "dev-1668959868797-59008507635602"
           startBlock: 103859819
       mapping:
           apiVersion: 0.0.6
